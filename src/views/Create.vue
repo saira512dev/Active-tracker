@@ -75,7 +75,7 @@
             <input required type="text" class="p-2 w-full text-gray-500 focus:outline-none" v-model="item.distance">
           </div>
            <div class="flex flex-col flex-1">
-            <label for="duration" class="mb-1 text-sm text-at-light-green">Duration</label>
+            <label for="duration" class="mb-1 text-sm text-at-light-green">Duration(min)</label>
             <input required type="text" class="p-2 w-full text-gray-500 focus:outline-none" v-model="item.duration">
           </div>
            <div class="flex flex-col flex-1">

@@ -181,12 +181,12 @@
             </div>
             <div class="flex flex-1 flex-col ">
               <label for="duration" class="mb-1 text-sm text-at-light-green">
-                Duration
+                Duration(Mins)
               </label>
               <input id="duration" v-if="edit" type="text"
               class="p-2 w-full text-gray-500 focus:outline-none"
               v-model="item.duration"/>
-              <p v-else>{{ item.duration }}</p>
+              <p v-else>{{ item.duration }} </p>
             </div>
             <div class="flex flex-1 flex-col ">
               <label for="pace" class="mb-1 text-sm text-at-light-green">
