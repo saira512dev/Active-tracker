@@ -22,7 +22,7 @@
         <div class="flex flex-col">
           <label for="workout-type" class="mb-1 text-sm text-at-light-green">Workout Type</label>
           <select @change="workoutChange" v-model="workoutType" id="workout-type" required class="p-2 text-gray-500 focus:outline-none">
-            <option value="select-workout">Select Workout</option>
+            <option disabled value="">Select Workout</option>
             <option value="strength">Strength Training</option>
             <option value="cardio">Cardio</option>
           </select>

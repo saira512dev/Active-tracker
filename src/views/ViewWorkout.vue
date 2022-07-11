@@ -58,6 +58,7 @@
           </span>
           <div class="w-full mt-6">
             <input
+              required
               v-if="edit"
               type="text"
               class="p-2 w-full text-gray-500 focus:outline-none"
@@ -93,6 +94,7 @@
                   id="exercise-name"
                   v-if="edit"
                   type="text"
+                  required
                   class="p-2 w-full text-gray-500 focus:outline-none"
                   v-model="item.exercise"
                 />
@@ -106,6 +108,7 @@
                   id="sets"
                   v-if="edit"
                   type="text"
+                  required
                   class="p-2 w-full text-gray-500 focus:outline-none"
                   v-model="item.sets"
                 />
@@ -118,6 +121,7 @@
                 <input
                   id="reps"
                   v-if="edit"
+                  required
                   type="text"
                   class="p-2 w-full text-gray-500 focus:outline-none"
                   v-model="item.reps"
@@ -131,6 +135,7 @@
                 <input
                   id="weight"
                   v-if="edit"
+                  required
                   type="text"
                   class="p-2 w-full text-gray-500 focus:outline-none"
                   v-model="item.weight"
@@ -161,10 +166,10 @@
               <label for="cardioType" class="mb-1 text-sm text-at-light-green">
                 Type
               </label>
-              <select id="cardioType" v-if="edit" type="text"
+              <select id="cardioType" v-if="edit" type="text" required
               class="p-2 w-full text-gray-500 focus:outline-none"
               v-model="item.cardioType">
-                <option value="#">Select Type</option>
+                <option disabled value="#">Select Type</option>
                 <option value="run">Run</option>
                 <option value="walk">Walk</option>
               </select>
@@ -174,7 +179,7 @@
               <label for="distance" class="mb-1 text-sm text-at-light-green">
                 Distance
               </label>
-              <input id="distance" v-if="edit" type="text"
+              <input id="distance" v-if="edit" type="text" required
               class="p-2 w-full text-gray-500 focus:outline-none"
               v-model="item.distance"/>
               <p v-else>{{ item.distance }}</p>
@@ -183,7 +188,7 @@
               <label for="duration" class="mb-1 text-sm text-at-light-green">
                 Duration(Mins)
               </label>
-              <input id="duration" v-if="edit" type="text"
+              <input id="duration" v-if="edit" type="text" required
               class="p-2 w-full text-gray-500 focus:outline-none"
               v-model="item.duration"/>
               <p v-else>{{ item.duration }} </p>
@@ -192,7 +197,7 @@
               <label for="pace" class="mb-1 text-sm text-at-light-green">
                 Pace
               </label>
-              <input id="pace" v-if="edit" type="text"
+              <input id="pace" v-if="edit" type="text" required
               class="p-2 w-full text-gray-500 focus:outline-none"
               v-model="item.pace"/>
               <p v-else>{{ item.pace }}</p>
@@ -281,8 +286,6 @@ export default {
     // Edit mode
     const editMode = () => {
       edit.value = !edit.value;
-      console.log("HAI" + edit.value);
-      console.log(data.value.exercises);
     };
 
     // Add exercise
@@ -321,6 +324,14 @@ export default {
 
     // Update Workout
     const update = async () => {
+      if(data.value.workoutName == "" || data.value.exercises.some(exercise => {
+          const values = Object.values(exercise);
+          if (values.some(n => n =="")) return true
+        })) {
+        errorMsg.value = `Make sure all fields are filled`;
+        setTimeout(() => errorMsg.value = "", 5000);
+        return
+      }
       try {
         const { error } = await supabase.from("workouts").update({
           workoutName:data.value.workoutName,
@@ -329,10 +340,10 @@ export default {
         if (error) throw error;
         edit.value = false;
         statusMsg.value = `Success: Workout updated`;
-        setTimeout(() => statusMsg.value = false, 5000);
+        setTimeout(() => statusMsg.value = "", 5000);
       } catch(error){
         errorMsg.value = `Error: ${error.message}`;
-        setTimeout(() => errorMsg.value = false, 5000);
+        setTimeout(() => errorMsg.value = "", 5000);
       }
     }
 

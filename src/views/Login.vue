@@ -43,12 +43,11 @@ export default {
     // Login function
     const login = async () => {
       try { 
-        let {user, error } = await supabase.auth.signIn({
+        let {error } = await supabase.auth.signIn({
         email: email.value,
         password: password.value
       });
       if(error) throw error
-      console.log(`logged in${user}`)
         router.push({name:"Home"})
       }
       catch(error){
